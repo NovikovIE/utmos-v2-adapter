@@ -272,7 +272,7 @@ class UTMOSv2ModelMixin(abc.ABC):
                 for t in pbar:
                     x = t[:-1]
                     x = [t.to(device, non_blocking=True) for t in x]
-                    with autocast():
+                    with torch.amp.autocast('cuda'):
                         output = self.__call__(*x).squeeze(1)
                     pred.append(output.cpu().numpy())
             res += np.concatenate(pred) / num_repetitions

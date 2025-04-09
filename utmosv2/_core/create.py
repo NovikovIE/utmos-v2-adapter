@@ -69,7 +69,7 @@ def create_model(
         if isinstance(checkpoint_path, str):
             checkpoint_path = Path(checkpoint_path)
         if not checkpoint_path.exists():
-            raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}")
+            raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}", weights_only=False)
 
         device = torch.device(
             ("cuda" if torch.cuda.is_available() else "cpu")

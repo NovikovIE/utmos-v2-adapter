@@ -9,9 +9,12 @@ from utmosv2._settings._config import Config
 import torch
 
 
-def load_audio(cfg: Config, file: Path | None = None, tensor: torch.Tensor | None = None) -> np.ndarray:
+def load_audio(cfg: Config, file: Path | None = None, tensor: np.ndarray | torch.Tensor | None = None) -> np.ndarray:
     if tensor is not None:
-        return tensor.cpu().numpy()
+        if isinstance(tensor, torch.Tensor):
+            return tensor.cpu().numpy()
+        else:
+            return tensor
     elif file is not None:
         if file.suffix in [".wav", ".flac"]:
             y, sr = librosa.load(file, sr=None)
